@@ -6,6 +6,23 @@ A simple tool to get data from Master Plan
 - Uses request module to get data from the intranet.
 - Requires to use browser cookie and session token.
 
+## Usage:
+- Set your cookie data on cookie.json file. (see cookie.json.sample)
+```
+usage: mpg.py [-h] -b BATCH [-d STARTDATE] -c COOKIEFILE
+
+Holberton Intranet - Master Plan Get v.01.
+
+arguments:
+  -h, --help            show this help message and exit
+  -b BATCH, --batch BATCH
+                        Batch number. Required.
+  -d STARTDATE, --date STARTDATE
+                        Start date to fetch data (Format Y-m-d). Default = Today.
+  -c COOKIEFILE, --cookiefile COOKIEFILE
+                        Cookie File Name. Required.
+```
+
 ### Return format from intranet
 Array of data and links
 
@@ -150,7 +167,8 @@ Array of data and links
 }
 ```
 
-## DB Storage Structure
+## TODO:
+### DB Storage Structure
 ```sql
 item
 id varchar(50)

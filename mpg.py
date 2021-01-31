@@ -33,7 +33,6 @@ def fetchData(batch, startdate, cookies):
         ('calendar_view', '1'),
         ('curriculum_id', '1'),
         ('start_date', startdate),
-        ('end_date', '2021-02-02'),
     )
 
     response = requests.get('https://intranet.hbtn.io//dashboards/master_planning_data.json', headers=headers, params=params, cookies=cookies, verify=False)
