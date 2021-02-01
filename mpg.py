@@ -2,6 +2,7 @@
 
 import requests
 import json
+import csv
 from argparse import ArgumentParser
 from datetime import datetime
 
@@ -37,12 +38,26 @@ def fetchData(batch, startdate, cookies):
 
     response = requests.get('https://intranet.hbtn.io//dashboards/master_planning_data.json', headers=headers, params=params, cookies=cookies, verify=False)
 
-    return response.text
+    return  json.loads(response.text)
+
+def exportCSV(data, outputfile='data_file.csv'):
+
+    data_file = open(outputfile, 'w+') 
+    csv_writer = csv.writer(data_file, delimiter = ';', quoting = csv.QUOTE_NONNUMERIC) 
+    
+    columns = ['id','_id','start_date','end_date','text','color','type','tags','batch']
+    csv_writer.writerow(columns) 
+    
+    for item in data: 
+        csv_writer.writerow([None if column not in item else item[column] for column in columns])
+    
+    data_file.close()
 
 def checkParams():
     parser = ArgumentParser(description='Holberton Intranet - Master Plan Get v.01.')
     parser.add_argument('-b','--batch', type=int, dest='batch',required=True, help='Batch number. Required.')
-    parser.add_argument('-d', '--date', dest='startdate', type=str, help='Start date to fetch data (Format Y-m-d). Default = Today.')
+    parser.add_argument('-d', '--date', dest='startdate', type=str, help='Start date to fetch data (Format Y-m-d). Default: data_file.csv')
+    parser.add_argument('-o', '--output', dest='outfile', type=str, help='Output CSV file. Default: data_file.csv.')
     parser.add_argument('-c', '--cookiefile', dest='cookiefile', type=str, required=True, help='Cookie File Name. Required.')
     args = parser.parse_args()
     return args
@@ -51,12 +66,16 @@ def main():
     args = checkParams()
     batch = args.batch
     startDate = args.startdate
+    outfile = args.outfile
     if (startDate is None):
         startDate = datetime.today().strftime('%Y-%m-%d')
     cookieFile = args.cookiefile
     cookies = loadCookieFile(cookieFile)
     result = fetchData(batch, startDate, cookies)
-    print(result)
+    # Add Batch
+    for item in result["data"]:
+        item.update( {"batch":batch})
+    exportCSV(result["data"], str(outfile))
 
 if __name__ == '__main__':
     main()

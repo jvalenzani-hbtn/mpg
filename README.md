@@ -9,16 +9,18 @@ A simple tool to get data from Master Plan
 ## Usage:
 - Set your cookie data on cookie.json file. (see cookie.json.sample)
 ```
-usage: mpg.py [-h] -b BATCH [-d STARTDATE] -c COOKIEFILE
+usage: mpg.py [-h] -b BATCH [-d STARTDATE] [-o OUTFILE] -c COOKIEFILE
 
 Holberton Intranet - Master Plan Get v.01.
 
-arguments:
+optional arguments:
   -h, --help            show this help message and exit
   -b BATCH, --batch BATCH
                         Batch number. Required.
   -d STARTDATE, --date STARTDATE
-                        Start date to fetch data (Format Y-m-d). Default = Today.
+                        Start date to fetch data (Format Y-m-d). Default: data_file.csv
+  -o OUTFILE, --output OUTFILE
+                        Output CSV file. Default: data_file.csv.
   -c COOKIEFILE, --cookiefile COOKIEFILE
                         Cookie File Name. Required.
 ```
