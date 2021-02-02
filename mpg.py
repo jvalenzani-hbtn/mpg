@@ -56,7 +56,7 @@ def exportCSV(data, outputfile='data_file.csv'):
 def checkParams():
     parser = ArgumentParser(description='Holberton Intranet - Master Plan Get v.01.')
     parser.add_argument('-b','--batch', type=int, dest='batch',required=True, help='Batch number. Required.')
-    parser.add_argument('-d', '--date', dest='startdate', type=str, help='Start date to fetch data (Format Y-m-d). Default: data_file.csv')
+    parser.add_argument('-d', '--date', dest='startdate', type=str, help='Start date of the chohort (Format Y-m-d). Required.')
     parser.add_argument('-o', '--output', dest='outfile', type=str, help='Output CSV file. Default: data_file.csv.')
     parser.add_argument('-c', '--cookiefile', dest='cookiefile', type=str, required=True, help='Cookie File Name. Required.')
     args = parser.parse_args()
@@ -67,8 +67,6 @@ def main():
     batch = args.batch
     startDate = args.startdate
     outfile = args.outfile
-    if (startDate is None):
-        startDate = datetime.today().strftime('%Y-%m-%d')
     cookieFile = args.cookiefile
     cookies = loadCookieFile(cookieFile)
     result = fetchData(batch, startDate, cookies)
